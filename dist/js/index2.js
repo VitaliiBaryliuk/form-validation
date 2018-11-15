@@ -28,45 +28,48 @@
     event.preventDefault();
 
     for (input in inputs) {
-      const inputValue = inputs[input].value;
-      const dataValue = inputs[input].dataset.value;
+      const elem = inputs[input];
+      const inputValue =  elem.value;
+      const dataValue = elem.dataset.value;
       const div = document.createElement('div');
       div.classList.add('message-block');
-      inputs[input].closest('label').appendChild(div);
-      console.log(inputs[input].name);
+      elem.closest('label').appendChild(div);
 
-      if (inputs[input].value == '' && inputs[input].name != "sex" ){
-        inputs[input].classList.add('invalid');
-        inputs[input].classList.remove('valid');
-        div.innerHTML = 'Shouldn\'t be an empty';
-        removeMessage(inputs[input]);
+      if (elem.value == '' && elem.name != "sex" ){
+        removeMessage(elem);
+        emptyCorrect(elem, div, 'Shouldn\'t be an empty', 'invalid');
       } 
-      else if(inputs[input].hasAttribute("data-value") && inputs[input].name != "sex"){
-        
+      else if(elem.hasAttribute("data-value") && elem.name != "sex"){
         if(dataValue == "text" && rules[dataValue].regExp.test(inputValue) == true){
-            inputs[input].classList.add("invalid");
-            div.innerHTML = rules[dataValue].message;
-            removeMessage(inputs[input]);
+            errorMessage(elem);
+            removeMessage(elem);
           }
-        else if(dataValue == "bool" && inputs[input].checked == false){
-            inputs[input].classList.add("invalid");
-            div.innerHTML = rules[dataValue].message;
-            removeMessage(inputs[input]);
+        else if(dataValue == "bool" && elem.checked == false){
+            errorMessage(elem);
+            removeMessage(elem);
         }
         else if(rules[dataValue].regExp.test(inputValue) == false && dataValue !== "text"){
-            inputs[input].classList.add("invalid");
-            div.innerHTML = rules[dataValue].message;
-            removeMessage(inputs[input]);
+            errorMessage(elem);
+            removeMessage(elem);
         }
         else{
-            inputs[input].classList.remove("invalid");
-            inputs[input].classList.add("valid");
-            div.innerHTML = "Correct";
-            removeMessage(inputs[input]);
+          emptyCorrect(elem, div, 'Correct!', 'valid')
+          removeMessage(elem);
         }
       }
     }
   });
+
+  function emptyCorrect(inp, div, mes, valClass){
+    inp.classList.remove('invalid');
+    inp.classList.add(valClass);
+    div.innerHTML = mes;
+  }
+
+  function errorMessage(inp){
+    inp.classList.remove("invalid");
+    div.innerHTML = rules[dataValue].message;
+  } 
 
   function removeMessage(inp){
     if(inp.closest('.parent').childNodes.length > 1){
