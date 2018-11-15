@@ -1,2 +1,2 @@
 # week2-template
-https://vitaliybaryliuk.github.io/week2-template/dist
+https://vitaliybaryliuk.github.io/form-validation/dist
