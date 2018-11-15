@@ -1,6 +1,6 @@
 (function () {
-  const form = document.querySelector('.my-form');
-  const inputs = form.querySelectorAll('.input');
+  const form = document.querySelector('.My-Form');
+  const inputs = form.querySelectorAll('.My-Form__input');
   const inputsArr = Object.keys(inputs);
   const rules = {
     text: {
@@ -36,8 +36,8 @@
   }
   
   function removeMessage(inp) {
-    if (inp.closest('.parent').childNodes.length > 1) {
-      inp.closest('.parent').childNodes[2].remove();
+    if (inp.closest('.My-Form__parent').childNodes.length > 1) {
+      inp.closest('.My-Form__parent').childNodes[2].remove();
     }
   }
   form.addEventListener('submit', (event) => {
